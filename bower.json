@@ -1,0 +1,11 @@
+{
+  "name": "YourProject",
+  "description": "Description of your project",
+  "main": "",
+  "authors": [
+    "guilhermevrs <guilhermevrs@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/guilhermevrs/frontflow",
+  "private": true
+}
