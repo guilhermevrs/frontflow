@@ -1,5 +1,5 @@
 //initialize all of our variables
-var app, base, concat, directory, gulp, gutil, hostname, path, refresh, sass, uglify, imagemin, minifyCSS, del, browserSync, autoprefixer, gulpSequence, shell, sourceMaps, plumber;
+var app, base, concat, directory, gulp, gutil, hostname, path, refresh, sass, uglify, imagemin, minifyCSS, del, browserSync, autoprefixer, gulpSequence, shell, sourceMaps, plumber, mainBowerFiles;
 
 var autoPrefixBrowserList = ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'];
 
@@ -18,6 +18,7 @@ autoprefixer = require('gulp-autoprefixer');
 gulpSequence = require('gulp-sequence').use(gulp);
 shell       = require('gulp-shell');
 plumber     = require('gulp-plumber');
+mainBowerFiles = require('main-bower-files');
 
 gulp.task('browserSync', function() {
     browserSync({
@@ -30,7 +31,6 @@ gulp.task('browserSync', function() {
         notify: false
     });
 });
-
 
 //compressing images & handle SVG files
 gulp.task('images', function(tmp) {
@@ -52,7 +52,9 @@ gulp.task('images-deploy', function() {
 //compiling our Javascripts
 gulp.task('scripts', function() {
     //this is where our dev JS scripts are
-    return gulp.src(['app/scripts/src/**/*.js'])
+    return gulp.src(mainBowerFiles(new RegExp('.+\.js')).concat(
+      ['app/scripts/src/**/*.js']
+    ))
                 //prevent pipe breaking caused by errors from gulp plugins
                 .pipe(plumber())
                 //this is the filename of the compressed version of our JS
@@ -68,7 +70,9 @@ gulp.task('scripts', function() {
 //compiling our Javascripts for deployment
 gulp.task('scripts-deploy', function() {
     //this is where our dev JS scripts are
-    return gulp.src(['app/scripts/src/**/*.js'])
+    return gulp.src(mainBowerFiles(new RegExp('.+\.js')).concat(
+      ['app/scripts/src/**/*.js']
+    ))
                 //prevent pipe breaking caused by errors from gulp plugins
                 .pipe(plumber())
                 //this is the filename of the compressed version of our JS
